@@ -2,3 +2,5 @@
 */.DS_Store
 rdoc
 pkg/*
+
+Gemfile.lock

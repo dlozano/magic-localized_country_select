@@ -5,17 +5,19 @@
 
 Gem::Specification.new do |s|
   s.name = "magic-localized_country_select"
-  s.version = "0.1.2"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["LIM SAS", "Damien MATHIEU", "Julien SANCHEZ", "Herv\u{e9} GAUCHER"]
-  s.date = "2012-01-19"
+  s.authors = ["LIM SAS", "Damien MATHIEU", "Julien SANCHEZ", "Herv\u{e9} GAUCHER", "Thomas von Deyen"]
+  s.date = "2012-03-08"
   s.description = "Localized country select list"
   s.email = "mail@magiclabs.de"
   s.extra_rdoc_files = [
     "README.rdoc"
   ]
   s.files = [
+    ".travis.yml",
+    "Gemfile",
     "MIT-LICENSE",
     "README.rdoc",
     "Rakefile",
@@ -32,18 +34,24 @@ Gem::Specification.new do |s|
   ]
   s.homepage = "https://github.com/magiclabs/localized_country_select"
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.10"
+  s.rubygems_version = "1.8.15"
   s.summary = "Localized country select list"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<magic-localized_country_select>, [">= 0"])
+      s.add_runtime_dependency(%q<rails>, ["~> 3"])
       s.add_runtime_dependency(%q<hpricot>, ["~> 0.8"])
     else
+      s.add_dependency(%q<magic-localized_country_select>, [">= 0"])
+      s.add_dependency(%q<rails>, ["~> 3"])
       s.add_dependency(%q<hpricot>, ["~> 0.8"])
     end
   else
+    s.add_dependency(%q<magic-localized_country_select>, [">= 0"])
+    s.add_dependency(%q<rails>, ["~> 3"])
     s.add_dependency(%q<hpricot>, ["~> 0.8"])
   end
 end

@@ -1,22 +1,14 @@
-# coding: utf-8
-$KCODE = 'u'
+# encoding: utf-8
 
 require 'test/unit'
 
 require 'rubygems'
 require 'active_support'
 require 'action_controller'
-# require 'action_controller/test_process'
 require 'action_view'
 require 'action_view/helpers'
 require 'action_view/helpers/tag_helper'
 require 'i18n'
-
-begin
-  require 'redgreen'
-rescue LoadError
-  puts "[!] Install redgreen gem for better test output ($ sudo gem install redgreen)"
-end unless ENV["TM_FILEPATH"]
 
 require 'localized_country_select'
 
@@ -27,12 +19,12 @@ class LocalizedCountrySelectTest < Test::Unit::TestCase
   include ActionView::Helpers::FormTagHelper
 
   def test_action_view_should_include_helper_for_object
-    assert ActionView::Helpers::FormBuilder.instance_methods.include?('country_select') # WTF not working with 1.9
-    assert ActionView::Helpers::FormOptionsHelper.instance_methods.include?('country_select')
+    assert ActionView::Helpers::FormBuilder.instance_methods.include?(:country_select)
+    assert ActionView::Helpers::FormOptionsHelper.instance_methods.include?(:country_select)
   end
 
   def test_action_view_should_include_helper_tag
-    assert ActionView::Helpers::FormOptionsHelper.instance_methods.include?('country_select_tag') # WTF not working with 1.9
+    assert ActionView::Helpers::FormOptionsHelper.instance_methods.include?(:country_select_tag)
   end
 
   def test_should_return_select_tag_with_proper_name_for_object
@@ -43,7 +35,6 @@ class LocalizedCountrySelectTest < Test::Unit::TestCase
   end
 
   def test_should_return_select_tag_with_proper_name
-    # puts country_select_tag( "competition_submission[data][citizenship]", nil)
     assert country_select_tag( "competition_submission[data][citizenship]", nil) =~
               Regexp.new(
               Regexp.escape('<select id="competition_submission_data_citizenship" name="competition_submission[data][citizenship]">') ),
@@ -72,7 +63,6 @@ class LocalizedCountrySelectTest < Test::Unit::TestCase
 
   def test_localized_countries_array_returns_correctly
     assert_nothing_raised { LocalizedCountrySelect::localized_countries_array() }
-    # puts LocalizedCountrySelect::localized_countries_array.inspect
     I18n.locale = 'en'
     assert_equal 243, LocalizedCountrySelect::localized_countries_array.size
     assert_equal 'Afghanistan', LocalizedCountrySelect::localized_countries_array.first[0]
@@ -103,14 +93,20 @@ class LocalizedCountrySelectTest < Test::Unit::TestCase
     assert_match Regexp.new(Regexp.escape(%Q{<option value="BT">Бутан</option>\n<option value="VU">Вануату</option>})), country_select(:user, :country)
   end
 
+  def test_country_options_for_select_string_is_html_safe
+    assert country_options_for_select.html_safe?, "country_options should be html_safe"
+  end
+
+  def test_country_options_for_select_string_with_priority_countries_is_html_safe
+    assert country_options_for_select(nil, ['DE']).html_safe?, "country_options with priority countries should be html_safe"
+  end
+
   # private
 
   def setup
     ['ru', 'en'].each do |locale|
-      # I18n.load_translations( File.join(File.dirname(__FILE__), '..', 'locale', "#{locale}.rb")  )  # <-- Old style! :)
       I18n.load_path += Dir[ File.join(File.dirname(__FILE__), '..', 'locale', "#{locale}.rb") ]
     end
-    # I18n.locale = I18n.default_locale
     I18n.locale = 'en'
   end
 
