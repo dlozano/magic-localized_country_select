@@ -19,12 +19,12 @@ class LocalizedCountrySelectTest < Test::Unit::TestCase
   include ActionView::Helpers::FormTagHelper
 
   def test_action_view_should_include_helper_for_object
-    assert ActionView::Helpers::FormBuilder.instance_methods.include?(:country_select)
-    assert ActionView::Helpers::FormOptionsHelper.instance_methods.include?(:country_select)
+    assert ActionView::Helpers::FormBuilder.instance_methods.map(&:to_s).include?('country_select')
+    assert ActionView::Helpers::FormOptionsHelper.instance_methods.map(&:to_s).include?('country_select')
   end
 
   def test_action_view_should_include_helper_tag
-    assert ActionView::Helpers::FormOptionsHelper.instance_methods.include?(:country_select_tag)
+    assert ActionView::Helpers::FormOptionsHelper.instance_methods.map(&:to_s).include?('country_select_tag')
   end
 
   def test_should_return_select_tag_with_proper_name_for_object
