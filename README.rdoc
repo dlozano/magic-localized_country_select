@@ -1,11 +1,22 @@
+{<img src="https://secure.travis-ci.org/magiclabs/localized_country_select.png?branch=master" alt="Build Status" />}[http://travis-ci.org/magiclabs/localized_country_select]
+{<img src="http://stillmaintained.com/magiclabs/localized_country_select.png" alt="Development Status" />}[http://stillmaintained.com/magiclabs/localized_country_select]
+
 = LocalizedCountrySelect
 
-Rails plugin to provide support for localized <tt><select></tt> menu with country names and for
+Rails gem to provide support for localized <tt><select></tt> menu with country names and for
 storing country information as country _code_ (eg. 'es'), not _name_ (eg. 'Spain'), in the database.
 
+= Installation
+
+Put this line into you Gemfile:
+
+    gem "magic-localized_country_select", "~> 0.2.0"
+
+= Usage
+
 Uses the Rails internationalization framework (I18n, http://rails-i18n.org) for translating the names of countries.
-Requires Rails 2.2 (released November 21st, 2008) or later versions.
-Country names are loaded from hashes in plugin directory, according to <tt>I18n.locale</tt> value.
+Requires Rails 3 or later versions.
+Country names are loaded from hashes in config/locale directory, according to <tt>I18n.locale</tt> value.
 
 You can easily translate country codes in your application like this:
 
