@@ -10,9 +10,9 @@ require 'action_view/helpers'
 require 'action_view/helpers/tag_helper'
 require 'i18n'
 
-require 'localized_country_select'
+require 'magic-localized_country_select'
 
-class LocalizedCountrySelectTest < Test::Unit::TestCase
+class MagicLocalizedCountrySelectTest < Test::Unit::TestCase
 
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::FormOptionsHelper
@@ -62,30 +62,30 @@ class LocalizedCountrySelectTest < Test::Unit::TestCase
   end
 
   def test_localized_countries_array_returns_correctly
-    assert_nothing_raised { LocalizedCountrySelect::localized_countries_array() }
+    assert_nothing_raised { MagicLocalizedCountrySelect::localized_countries_array() }
     I18n.locale = 'en'
-    assert_equal 243, LocalizedCountrySelect::localized_countries_array.size
-    assert_equal 'Afghanistan', LocalizedCountrySelect::localized_countries_array.first[0]
+    assert_equal 243, MagicLocalizedCountrySelect::localized_countries_array.size
+    assert_equal 'Afghanistan', MagicLocalizedCountrySelect::localized_countries_array.first[0]
     I18n.locale = 'ru'
-    assert_equal 243, LocalizedCountrySelect::localized_countries_array.size
-    assert_equal 'Австралия', LocalizedCountrySelect::localized_countries_array.first[0]
+    assert_equal 243, MagicLocalizedCountrySelect::localized_countries_array.size
+    assert_equal 'Австралия', MagicLocalizedCountrySelect::localized_countries_array.first[0]
   end
 
   def test_priority_countries_returns_correctly_and_in_correct_order
-    assert_nothing_raised { LocalizedCountrySelect::priority_countries_array([:TW, :CN]) }
+    assert_nothing_raised { MagicLocalizedCountrySelect::priority_countries_array([:TW, :CN]) }
     I18n.locale = 'en'
-    assert_equal [ ['Taiwan', 'TW'], ['China', 'CN'] ], LocalizedCountrySelect::priority_countries_array([:TW, :CN])
+    assert_equal [ ['Taiwan', 'TW'], ['China', 'CN'] ], MagicLocalizedCountrySelect::priority_countries_array([:TW, :CN])
   end
 
   def test_priority_countries_allows_passing_either_symbol_or_string
     I18n.locale = 'en'
-    assert_equal [ ['United States', 'US'], ['Canada', 'CA'] ], LocalizedCountrySelect::priority_countries_array(['US', 'CA'])
+    assert_equal [ ['United States', 'US'], ['Canada', 'CA'] ], MagicLocalizedCountrySelect::priority_countries_array(['US', 'CA'])
   end
 
   def test_priority_countries_allows_passing_upcase_or_lowercase
     I18n.locale = 'en'
-    assert_equal [ ['United States', 'US'], ['Canada', 'CA'] ], LocalizedCountrySelect::priority_countries_array(['us', 'ca'])
-    assert_equal [ ['United States', 'US'], ['Canada', 'CA'] ], LocalizedCountrySelect::priority_countries_array([:us, :ca])
+    assert_equal [ ['United States', 'US'], ['Canada', 'CA'] ], MagicLocalizedCountrySelect::priority_countries_array(['us', 'ca'])
+    assert_equal [ ['United States', 'US'], ['Canada', 'CA'] ], MagicLocalizedCountrySelect::priority_countries_array([:us, :ca])
   end
 
   def test_should_list_countries_with_accented_names_in_correct_order
