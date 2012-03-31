@@ -2,5 +2,5 @@
 */.DS_Store
 rdoc
 pkg/*
-
+.idea
 Gemfile.lock
