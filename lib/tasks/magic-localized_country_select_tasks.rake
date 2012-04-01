@@ -56,7 +56,7 @@ namespace :import do
         code   = row.search("td[@class='g']").inner_text
         code   = code[-code.size, 2]
         name   = row.search("td[@class='v']").inner_text
-        countries << { :code => code.to_sym, :name => name.to_s }
+        countries << { :code => code.downcase.to_sym, :name => name.to_s }
         print " ... #{name}"
       end
     end
