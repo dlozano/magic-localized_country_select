@@ -24,12 +24,12 @@ Gem::Specification.new do |s|
     "VERSION",
     "init.rb",
     "install.rb",
-    "lib/localized_country_select.rb",
-    "lib/tasks/localized_country_select_tasks.rake",
+    "lib/magic-localized_country_select.rb",
+    "lib/tasks/magic-localized_country_select_tasks.rake",
     "locale/en.rb",
     "locale/ru.rb",
     "magic-localized_country_select.gemspec",
-    "test/localized_country_select_test.rb",
+    "test/magic-localized_country_select_test.rb",
     "uninstall.rb"
   ]
   s.homepage = "https://github.com/magiclabs/localized_country_select"
