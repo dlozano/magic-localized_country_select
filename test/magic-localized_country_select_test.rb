@@ -71,6 +71,21 @@ class MagicLocalizedCountrySelectTest < Test::Unit::TestCase
     assert_equal 'Австралия', MagicLocalizedCountrySelect::localized_countries_array.first[0]
   end
 
+  def test_localized_countries_array_support_and_array_of_allowed_countries
+    assert_nothing_raised { MagicLocalizedCountrySelect::localized_countries_array() }
+    I18n.with_locale 'en' do
+      assert_equal 1, MagicLocalizedCountrySelect::localized_countries_array(:alloweds => ['AF']).length
+      assert_equal 'Afghanistan', MagicLocalizedCountrySelect::localized_countries_array(:alloweds => ['AF']).first.first
+    end
+  end
+
+  def test_localized_countries_array_support_can_raise_when_not_available
+    assert_raise(MagicLocalizedCountrySelect::TranslationNotAvailable) do
+      MagicLocalizedCountrySelect::localized_countries_array(:alloweds => ['XXX'])
+    end
+    assert_equal 'XXX', MagicLocalizedCountrySelect::localized_countries_array(:alloweds => ['XXX'], :silent => true).first.first
+  end
+
   def test_priority_countries_returns_correctly_and_in_correct_order
     assert_nothing_raised { MagicLocalizedCountrySelect::priority_countries_array([:TW, :CN]) }
     I18n.locale = 'en'

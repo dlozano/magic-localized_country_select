@@ -22,15 +22,34 @@ require 'rake'
 # See http://github.com/rails/country_select/tree/master/lib/country_select.rb
 #
 module MagicLocalizedCountrySelect
+  class MagicLocalizedCountrySelect::TranslationNotAvailable < StandardError; end
   class << self
 
     # Returns array with codes and localized country names (according to <tt>I18n.locale</tt>)
     # for <tt><option></tt> tags
     def localized_countries_array(options = {})
+      countries = I18n.translate(:countries).clone
+      alloweds = options[:alloweds]
+      if alloweds.present?
+        countries.slice!(*alloweds.map(&:to_sym)).inject({}) { |acum, e| acum.merge(e.first.to_s.upcase => e.last) }
+        # Some alloweds might not be translated, we will display the iso code but
+        # probably we should alert someone about that
+        if options[:silent]
+          alloweds.each { |allowed| countries[allowed.to_s] = allowed.to_s unless countries.key?(allowed) }
+        else
+          missing = if alloweds.length != countries.length
+            alloweds - countries.keys
+          else
+            []
+          end
+          raise MagicLocalizedCountrySelect::TranslationNotAvailable.new("Missing translations: #{missing}") if missing.present?
+        end
+      end
+
       if options[:description] == :abbreviated
-        I18n.translate(:countries).map { |key, value| [key.to_s] }.sort_by { |country| country.first }
+        countries.map { |key, value| [key.to_s] }.sort_by { |country| country.first }
       else
-        I18n.translate(:countries).map { |key, value| [value, key.to_s] }.sort_by { |country| country.first }
+        countries.map { |key, value| [value, key.to_s] }.sort_by { |country| country.first }
       end
     end
 
